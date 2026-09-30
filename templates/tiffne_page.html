@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <head>
+        <title>
+            🍱Tiffne Selection🍱
+        </title>
+        <script>
+            function returntowork_page() {
+                window.location.href = "{{ url_for('work_page') }}";
+            }
+        </script>
+    </head>
+    <body>
+        <form action="/tiffne" method="post" onsubmit="returntowork_page()">
+            <div class="card">
+                <h1>Tiffne Plaza</h1>
+                <p>you have selected Tiffne Option 
+
+
+                    <h3>please select the type of your tiffne </h3>
+                    <input type="radio" name="item" value="idly" required>idly<br>
+                    <input type="radio" name="item" value="dosa">dosa<br>
+                    <input type="radio" name="item" value="vada">vada<br>
+
+
+                    <h3>please select the number of plates {item} </h3>
+                    
+                    <input type="number" name="quantity" required>1-10<br>
+                    <input type="submit" value="Submit and continue to next option">
+
+                </p>
+            </div>
+        </form>
+    </body>
+</html>
