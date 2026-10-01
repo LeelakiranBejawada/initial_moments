@@ -37,24 +37,27 @@ def home_page():
 
     return render_template('Webpage.html')
 
+@app.route ('/order_managemanet',methods=['GET','POST'])
+def order_page():
+    error = None
+    orders = None
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+    orders = conn.execute('SELECT * FROM orders ORDER BY id DESC').fetchall()
+    conn.close() 
+    return render_template('order_manage.html',orders=orders,error=error)
+
 
 @app.route('/employee', methods=['GET', 'POST'])
 def employee_page():
-    error = None
-    orders = None
-
     if request.method == 'POST':
-        email = request.form.get('email', '').strip()
+        email = request.form.get('email',' ').strip()
         password=request.form.get('password','').strip()
         if not email.endswith('@employee.com') and password != '1234@employee':
                  error = 'incorrect mail or password'
         else:
-            conn = sqlite3.connect(db_path)
-            conn.row_factory = sqlite3.Row
-            orders = conn.execute('SELECT * FROM orders ORDER BY id DESC').fetchall()
-            conn.close() 
-
-    return render_template('employee.html', error=error, orders=orders)
+            return redirect(url_for('order_page'))
+    return render_template('employee.html')
 
 @app.route('/admin',methods=['GET','POST'])
 def admin_page():
@@ -66,10 +69,7 @@ def admin_page():
         if not email.endswith('@admin.com')  and password != 'password':
                 error='incorect email or password'
         else:
-            conn =sqlite3.connect(db_path)
-            conn.row_factory=sqlite3.Row
-            orders=conn.execute('SELECT * FROM orders ORDER BY id DESC').fetchall()
-            conn.close()
+            return redirect(url_for('order_page'))
     return render_template('admin.html',error=error,orders=orders)
 
 
@@ -169,7 +169,7 @@ def delete_oldest():
     cursor.execute('DELETE FROM orders WHERE id = (SELECT MIN(id) FROM orders)')
     conn.commit()
     conn.close()
-    return redirect('/employee')
+    return redirect(url_for('order_page'))
 
 
 
@@ -202,5 +202,5 @@ def end_page():
 
 if __name__=='__main__':
     init_db()
-    app_port=int(os.getenv('PORT',5000))
-    app.run(host='0.0.0.0',port=app_port)
+    app_port=int(os.getenv('PORT',10000))
+    app.run(host='0.0.0.0',port=app_port,debug=False)
