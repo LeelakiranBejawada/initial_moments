@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="refresh" content="10">
+        <title>Order Management </title>
+    </head>
+    <body>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        {% if orders is not none %}
+            <h2>Orders</h2>
+            {% if orders %}
+                <table>
+                    <thead>
+                        <tr>
+                            {% for column in orders[0].keys() %}
+                                <th>{{ column }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                            <tr>
+                                {% for column in order.keys() %}
+                                    <td>{{ order[column] }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No orders found.</p>
+            {% endif %}
+            <form action="/delete-oldest" method="POST">
+                <button type="submit">
+                    🗑️ Delete Oldest Order
+                </button>
+            </form>
+        {% endif %}
+    </body>
+</html>
