@@ -16,42 +16,7 @@
             <input id="password" name="password" type="password" required><br>
             <button type="submit">Access orders</button>
         </form>
-
-        {% if error %}
-            <p class="error">{{ error }}</p>
-        {% endif %}
-
-        {% if orders is not none %}
-            <h2>Orders</h2>
-            {% if orders %}
-                <table>
-                    <thead>
-                        <tr>
-                            {% for column in orders[0].keys() %}
-                                <th>{{ column }}</th>
-                            {% endfor %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for order in orders %}
-                            <tr>
-                                {% for column in order.keys() %}
-                                    <td>{{ order[column] }}</td>
-                                {% endfor %}
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            {% else %}
-                <p>No orders found.</p>
-            {% endif %}
-            <form action="/delete-oldest" method="POST" style="margin-bottom: 15px;">
-                <button type="submit">
-                    🗑️ Delete Oldest Order
-                </button>
-            </form>
-        {% endif %}
-        
+ 
     </main>
 </body>
 </html>
