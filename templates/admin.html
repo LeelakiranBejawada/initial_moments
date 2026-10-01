@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee</title>
+    <title>Admin</title>
 
 </head>
 <body>
     <main>
-        <h1>Employee</h1>
+        <h1>Admin</h1>
         <form method="post">
             <label for="email">Admin email</label><br>
             <input id="email" name="email" type="email" required><br>
@@ -17,35 +17,6 @@
             <button type="submit">Access orders</button>
         </form>
 
-        {% if error %}
-            <p class="error">{{ error }}</p>
-        {% endif %}
-
-        {% if orders is not none %}
-            <h2>Orders</h2>
-            {% if orders %}
-                <table>
-                    <thead>
-                        <tr>
-                            {% for column in orders[0].keys() %}
-                                <th>{{ column }}</th>
-                            {% endfor %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for order in orders %}
-                            <tr>
-                                {% for column in order.keys() %}
-                                    <td>{{ order[column] }}</td>
-                                {% endfor %}
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            {% else %}
-                <p>No orders found.</p>
-            {% endif %}
-        {% endif %}
     </main>
 </body>
 </html>
